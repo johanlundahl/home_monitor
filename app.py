@@ -2,6 +2,7 @@ import paho.mqtt.client as mqtt
 import json
 import slack
 import config
+from datetime import datetime
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -21,7 +22,8 @@ def on_message(client, userdata, msg):
         if vals['humidity'] < 30 or vals['humidity'] > 70:
             #print('Humidity is to low or high!')
             slack.post('Humidity is to low or high! Temperature is {} C and humidity is {} %.'.format(vals['temperature'], vals['humidity']))
-    print(msg.topic+" "+str(msg.payload))
+    ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    print('{} {}'.format(ts, str(msg.payload)))
 
 if __name__ == '__main__':
     client = mqtt.Client()
