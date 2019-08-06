@@ -23,10 +23,10 @@ def on_message(client, userdata, msg):
             #print('Humidity is to low or high!')
             slack.post('Humidity is to low or high! Temperature is {} C and humidity is {} %.'.format(vals['temperature'], vals['humidity']))
     ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    print('{} {}'.format(ts, str(msg.payload)))
+    print('{} {}'.format(ts, msg.payload))
 
 if __name__ == '__main__':
-    client = mqtt.Client()
+    client = mqtt.Client(protocol=mqtt.MQTTv31)
     client.on_connect = on_connect
     client.on_message = on_message
     client.connect(config.mqtt_server, 1883, 60)
