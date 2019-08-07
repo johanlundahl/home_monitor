@@ -3,7 +3,7 @@ import json
 import slack
 import config
 from datetime import datetime
-import validator
+from pytils import validator
 from sensor import Sensor
 
 sensor_checker = validator.Checker().all()
