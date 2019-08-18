@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_basicauth import BasicAuth
 
 app = Flask(__name__)
@@ -10,7 +10,7 @@ basic_auth = BasicAuth(app)
 @app.route("/", methods=['GET'])
 @basic_auth.required
 def root():
-	return 'Halloj!'
+	return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
