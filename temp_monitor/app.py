@@ -51,12 +51,11 @@ def run():
 
     while True:
         time.sleep(10)
-        print('Sensor life check...')
         for name in sensor_readings:
             dt, sensor = sensor_readings[name]
-            print((datetime.now()-dt).seconds, 'seconds since last reading')
-            # check and alarm if sensor reading is older than 5 minutes
-
+            if (datetime.now()-dt).seconds > 60*5:
+                print((datetime.now()-dt).seconds, 'seconds since last reading')
+            
     client.disconnect()
     client.loop_stop()
 
