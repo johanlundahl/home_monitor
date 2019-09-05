@@ -1,2 +1,3 @@
 paho-mqtt
 git+https://github.com/johanlundahl/pytils.git
+requests
