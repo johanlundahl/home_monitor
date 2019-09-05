@@ -1,10 +1,9 @@
 import paho.mqtt.client as mqtt
 import json
-import slack
-import config
+from temp_monitor import slack, config, http
 from datetime import datetime
 from pytils import validator
-from sensor import Sensor
+from temp_monitor.sensor import Sensor
 import time
 
 sensor_checker = validator.Checker().all()
@@ -33,6 +32,7 @@ def on_message(client, userdata, msg):
 
     if msg.topic == config.topic_sub:
         sensor = Sensor.from_json(msg.payload)
+        http.post(sensor.to_json())
         
         global sensor_readings
         sensor_readings[sensor.name] = (datetime.now(), sensor)
