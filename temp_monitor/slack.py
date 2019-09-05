@@ -1,5 +1,5 @@
 import requests
-import config
+from temp_monitor import config
 
 def post(message, image_url = None):
     payload = {"text": "{}".format(message)}
