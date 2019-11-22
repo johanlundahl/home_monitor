@@ -7,6 +7,7 @@ class Sensor:
         self.temperature = temperature
         self.humidity = humidity
         self.timestamp = timestamp
+        self.date = self.timestamp.strftime('%Y-%m-%d')
 
     def to_json(self):
         return json.dumps(self, cls=SensorEncoder)
