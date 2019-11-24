@@ -1,9 +1,9 @@
 import paho.mqtt.client as mqtt
 import json
-from temp_monitor import slack, config, http
+from home_monitor import slack, config, http
 from datetime import datetime
 from pytils import validator
-from temp_monitor.sensor import Sensor
+from home_monitor.sensor import Sensor
 import time
 
 sensor_checker = validator.Checker().all()
