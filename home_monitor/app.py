@@ -3,7 +3,7 @@ import json
 from home_monitor import slack, config, http
 from datetime import datetime
 from pytils import validator
-from home_monitor.sensor import Sensor
+from home_monitor.model.sensor import Sensor
 import time
 
 sensor_checker = validator.Checker().all()
@@ -13,6 +13,9 @@ sensor_checker.add_rule(lambda x: x.humidity > 30, 'Humidity is to low.')
 sensor_checker.add_rule(lambda x: x.humidity < 70, 'Humidity is to high.')
 
 sensor_readings = {}
+
+# TODO: logging
+# TODO: clean up with packages
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
