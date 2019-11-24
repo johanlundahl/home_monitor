@@ -1,2 +1,4 @@
 *.pyc
 home_monitor/config.py
+*.log
+.DS_Store
