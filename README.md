@@ -1,10 +1,8 @@
 # home_monitor
+This project is suitable to run on a Raspberry Pi with python. For this project to make sense there should be a MQTT broker reachable for the Raspberry Pi and something posting messages to that MQTT broker. The MQTT broker can be installed on the same Raspberry Pi running this project. 
 
 ## Prerequisites
-
-This project is suitable to run on a Raspberry Pi with python. For this project to make sense there should be a MQTT broker reachable for the Raspberry Pi and something posting messages to that MQTT broker. Please find instructions on how to set up a MQTT broker here: https://randomnerdtutorials.com/how-to-install-mosquitto-broker-on-raspberry-pi/
-
-The MQTT broker can be installed on the same Raspberry Pi running this project. 
+Please find instructions on how to set up a MQTT broker here: https://randomnerdtutorials.com/how-to-install-mosquitto-broker-on-raspberry-pi/
 
 MQTT on ESP8266
 https://randomnerdtutorials.com/micropython-mqtt-esp32-esp8266/

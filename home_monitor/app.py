@@ -1,8 +1,8 @@
 import paho.mqtt.client as mqtt
 import json
-from home_monitor import slack, config, http
 from datetime import datetime
-from pytils import validator
+from pytils import validator, http, slack
+from home_monitor import config
 from home_monitor.model.sensor import Sensor
 import time
 
@@ -15,7 +15,9 @@ sensor_checker.add_rule(lambda x: x.humidity < 70, 'Humidity is to high.')
 sensor_readings = {}
 
 # TODO: logging
-# TODO: clean up with packages
+# TODO: move http and slack to pytils
+# TODO: move alarm functionality to module
+# TODO: add sensor name to Checker rules
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -31,7 +33,7 @@ def on_message(client, userdata, msg):
 
     if msg.topic == config.topic_sub:
         sensor = Sensor.from_json(msg.payload)
-        status_code = http.post(sensor.to_json(), sensor.name)
+        status_code = http.post_json(config.save_sensor_url, sensor.to_json())
         
         global sensor_readings
         sensor_readings[sensor.name] = (datetime.now(), sensor)
@@ -42,7 +44,7 @@ def on_message(client, userdata, msg):
 def notify(alarm, sensor):
     message = 'Warning {}! {} Temperature {} C, Humidity {} %'.format(sensor.name, alarm, sensor.temperature, sensor.humidity)
     print(message)
-    slack.post(message)
+    slack.post(config.slack_webhook_url, message)
 
 def start_client():
     client = mqtt.Client()
