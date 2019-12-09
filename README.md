@@ -39,6 +39,11 @@ To start the application manually
 $ python3 -m home_store.app
 ```
 
+Make the python script executable:
+```
+$ chmod +x <python file>
+```
+
 To make the application start automatically define a crontab job. Edit crontab by
 ```
 $ crontab -e
