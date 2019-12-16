@@ -1,23 +1,15 @@
 import paho.mqtt.client as mqtt
 import json
 from datetime import datetime
-from pytils import validator, http, slack, logger
+from pytils import http, logger
 from home_monitor import config
-from home_monitor.model.sensor import Sensor
+from home_monitor.manager import SensorManager
+from home_monitor.model.sensor import Sensor, Reading
 import time
 
 
-sensor_checker = validator.Checker().all()
-sensor_checker.add_rule(lambda x: x.temperature > 15, 'Temperature is to low.')
-sensor_checker.add_rule(lambda x: x.temperature < 30, 'Temperature is to high.')
-sensor_checker.add_rule(lambda x: x.humidity > 30, 'Humidity is to low.')
-sensor_checker.add_rule(lambda x: x.humidity < 70, 'Humidity is to high.')
+manager = SensorManager()
 
-sensor_readings = {}
-
-# TODO: logging
-# TODO: move alarm functionality to module
-# TODO: add sensor name to Checker rules
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -27,23 +19,12 @@ def on_connect(client, userdata, flags, rc):
     
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    ts = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    logger.info('Receiving message: {} {}'.format(ts, msg.payload))
+    logger.info('Receiving message: {}'.format(msg.payload))
 
     if msg.topic == config.topic_sub:
-        sensor = Sensor.from_json(msg.payload)
-        status_code = http.post_json(config.save_sensor_url, sensor.to_json())
-        
-        global sensor_readings
-        sensor_readings[sensor.name] = (datetime.now(), sensor)
-        if not sensor_checker.validate(sensor):
-            alarm = sensor_checker.evaluate(sensor)
-            notify(alarm, sensor)        
-
-def notify(alarm, sensor):
-    message = 'Warning {}! {} Temperature {} C, Humidity {} %'.format(sensor.name, alarm, sensor.temperature, sensor.humidity)
-    logger.info('Notifying message: {}'.format(message))
-    slack.post(config.slack_webhook_url, message)
+        reading = Reading.from_json(msg.payload)
+        global manager
+        manager.update(reading)
 
 def start_client():
     client = mqtt.Client()
@@ -59,14 +40,8 @@ def stop_client(client):
 
 def run():
     client = start_client()
-
     while True:
-        time.sleep(10)
-        for name in sensor_readings:
-            dt, sensor = sensor_readings[name]
-            if (datetime.now()-dt).seconds > 60*5:
-                logger.warning((datetime.now()-dt).seconds, 'seconds since last reading')
-            
+        time.sleep(60)
     stop_client(client)
 
 if __name__ == '__main__':
