@@ -6,10 +6,10 @@ from pytils import validator, slack, http, logger
 class SensorManager:
     
     sensor_checker = validator.Checker().all()
-    sensor_checker.add_rule(lambda x: x.temperature > 15, 'Temperature is to low.')
-    sensor_checker.add_rule(lambda x: x.temperature < 30, 'Temperature is to high.')
-    sensor_checker.add_rule(lambda x: x.humidity > 30, 'Humidity is to low.')
-    sensor_checker.add_rule(lambda x: x.humidity < 70, 'Humidity is to high.')
+    sensor_checker.add_rule(lambda x: x.temperature > 15 and x.name == 'basement', 'Temperature is to low.')
+    sensor_checker.add_rule(lambda x: x.temperature < 30 and x.name == 'basement', 'Temperature is to high.')
+    sensor_checker.add_rule(lambda x: x.humidity > 30 and x.name == 'basement', 'Humidity is to low.')
+    sensor_checker.add_rule(lambda x: x.humidity < 70 and x.name == 'basement', 'Humidity is to high.')
 
     def __init__(self, lifetime=24):
         self._sensors = {}
