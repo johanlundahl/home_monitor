@@ -1,11 +1,10 @@
-# home_monitor
+# Home Monitor
+This project receives sensor values from a MQTT server, checks their values against pre-defined validation rules and sends them to [Home Store](http://github.com/johanlundahl/home_store) for storage.
+
 This project is suitable to run on a Raspberry Pi with python. For this project to make sense there should be a MQTT broker reachable for the Raspberry Pi and something posting messages to that MQTT broker. The MQTT broker can be installed on the same Raspberry Pi running this project. 
 
 ## Prerequisites
 Please find instructions on how to set up a MQTT broker here: https://randomnerdtutorials.com/how-to-install-mosquitto-broker-on-raspberry-pi/
-
-MQTT on ESP8266
-https://randomnerdtutorials.com/micropython-mqtt-esp32-esp8266/
 
 View all messages sent to the MQTT Broker (locally on the same machine):
 
@@ -41,7 +40,7 @@ $ python3 -m home_store.app
 
 Make the python script executable:
 ```
-$ chmod +x <python file>
+$ chmod +x home_store/app.py
 ```
 
 To make the application start automatically define a crontab job. Edit crontab by
@@ -57,4 +56,10 @@ Define which time the different jobs should be run at, e.g.
 Reboot your Rasperry Pi and the application will start:
 ```
 sudo reboot
+```
+
+## How to use the application
+The application is run in the background without an user interface. Events are logged to the application log file and can be viewed through
+```
+tail -f application.log
 ```
