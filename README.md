@@ -1,7 +1,7 @@
 # Home Monitor
 This project receives sensor values from a MQTT server, checks their values against pre-defined validation rules and sends them to [Home Store](http://github.com/johanlundahl/home_store) for storage.
 
-This project is suitable to run on a Raspberry Pi with python. For this project to make sense there should be a MQTT broker reachable for the Raspberry Pi and something posting messages to that MQTT broker. The MQTT broker can be installed on the same Raspberry Pi running this project. 
+This project is suitable to run on a Raspberry Pi and is intended to use with [Temp Sensor](http://github.com/johanlundahl/temp_sensor), [Home Store](http://github.com/johanlundahl/home_store), [Home Eye](http://github.com/johanlundahl/home_eye) and [Mosquitto MQTT Broker](https://randomnerdtutorials.com/how-to-install-mosquitto-broker-on-raspberry-pi/).
 
 ## Prerequisites
 Please find instructions on how to set up a MQTT broker here: https://randomnerdtutorials.com/how-to-install-mosquitto-broker-on-raspberry-pi/
@@ -30,6 +30,15 @@ Edit config.py and add required configuration parameters for the application by
 ```
 $ nano home_monitor/config.py
 ```
+
+Specify the following configuration parameters in the `home_monitor/config.py` file:
+```
+mqtt_server = 'ip-address-of-mqtt-broker'
+topic_sub = 'mqtt-topic-name'
+slack_webhook_url = 'url-to-post-slack-messages-to'
+save_sensor_url = 'http://ip-address-to-home-store/api/sensors'
+```
+
 
 ## Running
 
