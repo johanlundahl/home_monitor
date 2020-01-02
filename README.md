@@ -67,8 +67,8 @@ Reboot your Rasperry Pi and the application will start:
 sudo reboot
 ```
 
-## How to use the application
-The application is run in the background without an user interface. Events are logged to the application log file and can be viewed through
+## Logging
+Application events are logged to the application log file and can be viewed through
 ```
 tail -f application.log
 ```
