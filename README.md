@@ -74,4 +74,6 @@ $ tail -f application.log
 ```
 
 ## How to use the application
-The application do not have a graphic interface. It subscribes to a topic on a MQTT broker. Any received value is posted to [Home Store](http://github.com/johanlundahl/home_store) where it is persisted. Received values are checked against the defined warning rules in the `home_monitor/manager.py` file. If the received value fulfil any of the rules then a warning is posted to a Slack channel.   
+The application do not have a graphic interface. It subscribes to a topic on a MQTT broker. Any received value is posted to [Home Store](http://github.com/johanlundahl/home_store) where it is persisted. Received values are checked against the defined warning rules in the `home_monitor/manager.py` file. If the received value fulfil any of the rules then a warning is posted to a Slack channel.
+
+Read the [Incoming Webhooks for Slack](https://slack.com/intl/en-se/help/articles/115005265063-Incoming-WebHooks-for-Slack) tutorial to learn more on how to set up your Slack channel so that it can receive messages from external apps.
