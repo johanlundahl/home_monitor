@@ -74,4 +74,4 @@ $ tail -f application.log
 ```
 
 ## How to use the application
-The application do not have a graphic interface. It subscribes to a topic on a MQTT broker. Any received value is posted to (Home Store)[http://github.com/johanlundahl/home_store] where it is persisted. Received values are checked against the defined warning rules in the `home_monitor/manager.py` file. If the received value fulfil any of the rules then a warning is posted to a Slack channel.   
+The application do not have a graphic interface. It subscribes to a topic on a MQTT broker. Any received value is posted to [Home Store](http://github.com/johanlundahl/home_store) where it is persisted. Received values are checked against the defined warning rules in the `home_monitor/manager.py` file. If the received value fulfil any of the rules then a warning is posted to a Slack channel.   
