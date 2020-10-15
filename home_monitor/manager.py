@@ -1,7 +1,7 @@
 import datetime
 from home_monitor import config
 from home_monitor.model.sensor import Sensor, Reading
-from pytils import validator, slack, http, logger
+from pytils import validator, slack, http, log
 
 class SensorManager:
     
@@ -30,7 +30,7 @@ class SensorManager:
             if not sensor.alarm_state:
                 alarm = self.sensor_checker.evaluate(sensor.reading)
                 self.notify(alarm, sensor.reading)
-                logger.warning(alarm)
+                log.warning(alarm)
             sensor.alarm_state = True
         elif sensor.alarm_state:
                 sensor.alarm_state = False
