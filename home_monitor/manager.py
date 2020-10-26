@@ -1,7 +1,8 @@
 import datetime
-from home_monitor import config
 from home_monitor.model.sensor import Sensor, Reading
+from pytils.config import cfg
 from pytils import validator, slack, http, log
+
 
 class SensorManager:
     
@@ -22,7 +23,7 @@ class SensorManager:
             self._sensors[reading.name] = Sensor(reading)
 
         sensor = self._sensors[reading.name]
-        status_code = http.post_json(config.save_sensor_url, reading.to_json())
+        status_code = http.post_json(cfg.save_sensor_url, reading.to_json())
         self.check(sensor)
 
     def check(self, sensor):
@@ -38,4 +39,4 @@ class SensorManager:
 
     def notify(self, alarm, sensor):
         message = 'Warning {}! {} Temperature {} C, Humidity {} %'.format(sensor.name, alarm, sensor.temperature, sensor.humidity)
-        slack.post(config.slack_webhook_url, message)
+        slack.post(cfg.slack_webhook_url, message)
