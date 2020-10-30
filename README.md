@@ -11,6 +11,10 @@ View all messages sent to the MQTT Broker (locally on the same machine):
 ```
 $ mosquitto_sub -t /#
 ```
+or
+```
+$ mosquitto_sub -v -t 'sensors'
+```
 
 ## Installation
 
@@ -23,20 +27,28 @@ $ git clone https://github.com/johanlundahl/home_monitor
 Install required python modules
 
 ```
-$ sudo pip3 install -r requirements.txt
+$ make init
 ```
 
 Edit config.py and add required configuration parameters for the application by
 ```
-$ nano home_monitor/config.py
+$ nano home_monitor/app.yaml
 ```
 
-Specify the following configuration parameters in the `home_monitor/config.py` file:
-```
-mqtt_server = 'ip-address-of-mqtt-broker'
-topic_sub = 'mqtt-topic-name'
-slack_webhook_url = 'url-to-post-slack-messages-to'
-save_sensor_url = 'http://ip-address-to-home-store/api/sensors'
+Specify the following configuration parameters in the `home_monitor/app.yaml` file:
+``` yaml
+mqtt:
+  server: "ip of mqtt server"
+  topic: "sensors"
+
+... 
+
+slack_webhook_url: = ""
+
+...
+
+save_sensor_url: "http://localhost:5000/api/sensors"
+
 ```
 
 
@@ -44,12 +56,7 @@ save_sensor_url = 'http://ip-address-to-home-store/api/sensors'
 
 To start the application manually 
 ```
-$ python3 -m home_store.app
-```
-
-Make the python script executable:
-```
-$ chmod +x home_store/app.py
+$ make run
 ```
 
 To make the application start automatically define a crontab job. Edit crontab by
@@ -70,7 +77,7 @@ $ sudo reboot
 ## Logging
 Application events are logged to the application log file and can be viewed through
 ```
-$ tail -f application.log
+$ make logging
 ```
 
 ## How to use the application
