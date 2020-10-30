@@ -4,7 +4,7 @@ This project receives sensor values from a MQTT server, checks their values agai
 This project is suitable to run on a Raspberry Pi and is intended to use with [Temp Sensor](http://github.com/johanlundahl/temp_sensor), [Home Store](http://github.com/johanlundahl/home_store), [Home Eye](http://github.com/johanlundahl/home_eye) and [Mosquitto MQTT Broker](https://randomnerdtutorials.com/how-to-install-mosquitto-broker-on-raspberry-pi/).
 
 ## Prerequisites
-Please find instructions on how to set up a MQTT broker here: https://randomnerdtutorials.com/how-to-install-mosquitto-broker-on-raspberry-pi/
+Please find instructions on how to [set up a MQTT broker](https://randomnerdtutorials.com/how-to-install-mosquitto-broker-on-raspberry-pi/).
 
 View all messages sent to the MQTT Broker (locally on the same machine):
 
