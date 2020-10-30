@@ -1,11 +1,11 @@
-import paho.mqtt.client as mqtt
-import json
 from datetime import datetime
+import json
+import time
+import paho.mqtt.client as mqtt
 from pytils import http, log
 from pytils.config import cfg
 from home_monitor.manager import SensorManager
 from home_monitor.model.sensor import Sensor, Reading
-import time
 
 
 manager = SensorManager()
