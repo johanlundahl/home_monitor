@@ -1,11 +1,15 @@
 MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
+CURRENT_DIR := $(dir $(MKFILE_PATH))
+
+tmp:
+	echo $(CURRENT_DIR2)
 
 init:
 	sudo pip3 install -r requirements.txt
 	chmod +x home_store/app.py
 
 autostart:
-	(crontab -l; echo "@reboot cd $(MKFILE_PATH) && python3 -m home_monitor.app") | crontab -u pi -
+	(crontab -l; echo "@reboot cd $(CURRENT_DIR) && python3 -m home_monitor.app") | crontab -u pi -
 
 run:
 	python3 -m home_monitor.app
