@@ -30,9 +30,9 @@ Install required python modules
 $ make init
 ```
 
-Edit config.py and add required configuration parameters for the application by
+Edit application config file and add required parameters for the application by
 ```
-$ nano home_monitor/app.yaml
+$ make config
 ```
 
 Specify the following configuration parameters in the `home_monitor/app.yaml` file:

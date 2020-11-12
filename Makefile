@@ -13,3 +13,6 @@ run:
 
 logging:
 	tail -f application.log
+
+config:
+	nano home_monitor/app.yaml
