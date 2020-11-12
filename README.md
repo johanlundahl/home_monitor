@@ -59,7 +59,7 @@ To start the application manually
 $ make run
 ```
 
-To make the application start automatically run the following command that will define a crontab job
+To make the application start automatically at reboot run the following command
 ```
 $ make autostart
 ```
