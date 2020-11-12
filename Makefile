@@ -1,9 +1,6 @@
 MKFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 CURRENT_DIR := $(dir $(MKFILE_PATH))
 
-tmp:
-	echo $(CURRENT_DIR2)
-
 init:
 	sudo pip3 install -r requirements.txt
 	chmod +x home_store/app.py
