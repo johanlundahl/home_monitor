@@ -3,12 +3,13 @@ import json
 import time
 import paho.mqtt.client as mqtt
 from pytils import http, log
-from pytils.config import cfg
+from pytils import config
 from home_monitor.manager import SensorManager
 from home_monitor.model.sensor import Sensor, Reading
 
 
 manager = SensorManager()
+cfg = config.init()
 
 
 # The callback for when the client receives a CONNACK response from the server.
