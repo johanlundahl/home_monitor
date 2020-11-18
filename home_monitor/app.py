@@ -8,8 +8,8 @@ from home_monitor.manager import SensorManager
 from home_monitor.model.sensor import Sensor, Reading
 
 
-manager = SensorManager()
 cfg = config.init()
+manager = SensorManager(cfg.save_sensor_url, cfg.slack_webhook_url)
 
 
 # The callback for when the client receives a CONNACK response from the server.
