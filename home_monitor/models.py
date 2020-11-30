@@ -21,6 +21,10 @@ class Sensor:
         return isinstance(self._alarm_state, AlarmState)
 
     @property
+    def alarm_state(self):
+        return self._alarm_state
+
+    @property
     def reading(self):
         return self._reading
     
@@ -35,18 +39,36 @@ class Sensor:
         return self._last_updated
 
     def __repr__(self):
-        return 'Sensor ({} {} {})'.format(self.reading.name, self.last_reading, self.alarm_state)        
+        return str(self)
+
+    def __str__(self):
+        return 'Sensor ({} {} {})'.format(self.reading.name, self.last_updated, self.alarm_state)
 
 
 class Reading:
 
     def __init__(self, name, temperature, humidity, timestamp):
-        self.name = name
-        self.temperature = temperature
-        self.humidity = humidity
-        self.timestamp = timestamp
-        self.date = self.timestamp.strftime('%Y-%m-%d')
+        self._name = name
+        self._temperature = temperature
+        self._humidity = humidity
+        self._timestamp = timestamp
 
+    @property
+    def name(self):
+        return self._name
+    
+    @property
+    def temperature(self):
+        return self._temperature
+    
+    @property
+    def humidity(self):
+        return self._humidity
+
+    @property
+    def timestamp(self):
+        return self._timestamp.strftime('%Y-%m-%d %H:%M:%S')
+    
     def to_json(self):
         return json.dumps(self, cls=SensorEncoder)
 
@@ -54,17 +76,27 @@ class Reading:
     def from_json(cls, dct):
         return json.loads(dct, object_hook=SensorDecoder.decode)
 
+    def __repr__(self):
+        return str(self)
+
     def __str__(self):
-        return 'Reading({}, {}, {})'.format(self.name, self.temperature, self.humidity)
+        return 'Reading({}, {}, {})'.format(self._name, self._temperature, self._humidity)
 
 
 class SensorEncoder(json.JSONEncoder):
     
     def default(self, obj):
         if isinstance(obj, Sensor):
-            return {'name': obj.reading.name, 'last_reading': obj.last_reading, 'alarm_state': obj.alarm_state}
+            return {'name': obj.reading.name, 
+                'last_updated': obj.last_updated, 
+                'alarm_state': obj.alarm_state
+                }
         if isinstance(obj, Reading):
-            return {'name': obj.name, 'temperature': obj.temperature, 'humidity': obj.humidity, 'timestamp': obj.timestamp.strftime('%Y-%m-%d %H:%M:%S')}
+            return {'name': obj.name, 
+                'temperature': obj.temperature, 
+                'humidity': obj.humidity, 
+                'timestamp': obj.timestamp
+                }
         else:
             return super().default(obj)
 
