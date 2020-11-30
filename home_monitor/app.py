@@ -1,6 +1,4 @@
-from datetime import datetime
 import logging
-import json
 import time
 import paho.mqtt.client as mqtt
 import pytils.logging
@@ -24,6 +22,7 @@ def on_message(client, userdata, msg):
     logging.info('Receiving message: {}'.format(msg.payload))
 
     if msg.topic == cfg.mqtt.topic:
+
         reading = Reading.from_json(msg.payload)
         global manager
         manager.delegate(reading)
