@@ -1,11 +1,12 @@
 from datetime import datetime
+import logging
 import json
 import time
 import paho.mqtt.client as mqtt
-from pytils import http, log
+import pytils.logging
 from pytils import config
 from home_monitor.manager import SensorManager
-from home_monitor.model.sensor import Sensor, Reading
+from home_monitor.models import Reading
 
 
 cfg = config.init()
@@ -14,18 +15,18 @@ manager = SensorManager(cfg.save_sensor_url, cfg.slack_webhook_url)
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
-    log.info('Connected to MQTT server {} (with result code {})'.format(cfg.mqtt.server, str(rc)))
+    logging.info('Connected to MQTT server {} (with result code {})'.format(cfg.mqtt.server, str(rc)))
     client.subscribe(cfg.mqtt.topic)
-    log.info('Subscribing to topic {}'.format(cfg.mqtt.topic))
+    logging.info('Subscribing to topic {}'.format(cfg.mqtt.topic))
     
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    log.info('Receiving message: {}'.format(msg.payload))
+    logging.info('Receiving message: {}'.format(msg.payload))
 
     if msg.topic == cfg.mqtt.topic:
         reading = Reading.from_json(msg.payload)
         global manager
-        manager.update(reading)
+        manager.delegate(reading)
 
 def start_client():
     client = mqtt.Client()
@@ -45,9 +46,9 @@ def run():
         time.sleep(60)
     stop_client(client)
 
+
 if __name__ == '__main__':
     try:
-        log.init()
         run()
     except Exception:
-        log.exception('Application Exception')
+        logging.exception('Application Exception')
