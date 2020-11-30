@@ -1,6 +1,6 @@
 import abc
 import logging
-from pytils import validator, http
+from pytils import http
 from home_monitor.models import Sensor, Reading
 
 
@@ -23,7 +23,7 @@ class Handler(metaclass=abc.ABCMeta):
         pass
 
 
-class Validator(Handler):
+class ValidateHandler(Handler):
 
     def __init__(self, next_command=None):
         self._next = next_command
@@ -40,7 +40,7 @@ class Validator(Handler):
         return self._sensors[reading.name]            
 
 
-class Persist(Handler):
+class PersistHandler(Handler):
 
     def __init__(self, next_command=None, url=None):
         self._next = next_command
@@ -53,11 +53,16 @@ class Persist(Handler):
             logging.error('Status code {} when POST\'ing {}'.format(status_code, reading.to_json()))
     
 
-class Alarmer(Handler):
+class AlarmHandler(Handler):
+
+    def __init__(self, next_command=None):
+        self._next = next_command
+        self._alarmed = {}
 
     def process(self, request):
         request.history.append('notify if alarm')
         # check if alarm and if have been notified before
+        # do not alarm if sensor is not in dict
 
     #def notify(self, alarm, sensor):
         #    message = 'Warning {}! {} Temperature {} C, Humidity {} %'.format(sensor.name, alarm, sensor.temperature, sensor.humidity)

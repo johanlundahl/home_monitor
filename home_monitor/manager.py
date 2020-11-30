@@ -1,6 +1,5 @@
 import datetime
-from home_monitor.handlers import Persist, Validator 
-from home_monitor.models import Reading
+from home_monitor.handlers import PersistHandler, ValidateHandler 
 
 
 class SensorManager:
@@ -10,10 +9,10 @@ class SensorManager:
         self.slack_webhook_url = slack_url
 
         # set up chain of responsibity commands for handling incoming sensors
-        persist = Persist(url=sensor_url)
-        validator = Validator(persist)
-        self.first_command = validator
+        persist_handler = PersistHandler(url=sensor_url)
+        ValidateHandler = ValidateHandler(persist_handler)
+        self.first_command = ValidateHandler
 
-    def delegate(self, reading: Reading):
+    def delegate(self, reading):
         self.first_command.handle(reading)
    
