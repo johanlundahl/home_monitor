@@ -18,10 +18,8 @@ run:
 	python3 -m home_monitor.app
 
 test:
-	python3 -m unittest tests/validator_test.py
-	python3 -m unittest tests/alarms_test.py
-	python3 -m unittest tests/sensor_test.py
-
+	python3 -m unittest tests/*.py
+	
 update: 
 	git pull
 	pip3 install -r requirements.txt	
