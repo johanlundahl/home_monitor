@@ -1,6 +1,6 @@
 from datetime import datetime
 import json
-from home_monitor.alarms import NormalState, AlarmState
+from home_monitor.alarms import NormalState, AlarmState, TriggeredState
 
 
 class Sensor:
@@ -18,7 +18,11 @@ class Sensor:
 
     @property
     def alarm(self):
-        return isinstance(self._alarm_state, AlarmState)
+        return isinstance(self._alarm_state, (AlarmState, TriggeredState))
+
+    @property
+    def triggered(self):
+        return isinstance(self._alarm_state, TriggeredState)
 
     @property
     def alarm_state(self):
@@ -33,6 +37,9 @@ class Sensor:
         self._last_updated = datetime.now()
         self._reading = reading
         self._alarm_state = self._alarm_state.on_event(reading)
+
+    def alarm_raised(self):
+        self._alarm_state = self._alarm_state.on_event(self._reading)
 
     @property
     def last_updated(self):
