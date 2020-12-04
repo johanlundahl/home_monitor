@@ -28,7 +28,7 @@ class NormalState(State):
     def on_event(self, reading):
         is_alarm = self.alarm_checker.validate(reading)
         if is_alarm:
-            return AlarmState()
+            return TriggeredState()
         return self
 
 
@@ -39,3 +39,12 @@ class AlarmState(State):
         if not is_alarm:
             return NormalState()
         return self
+
+
+class TriggeredState(State):
+
+    def on_event(self, reading):
+        is_alarm = self.alarm_checker.validate(reading)
+        if not is_alarm:
+            return NormalState()
+        return AlarmState()
