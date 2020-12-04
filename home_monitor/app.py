@@ -25,7 +25,7 @@ def on_message(client, userdata, msg):
 
         reading = Reading.from_json(msg.payload)
         global manager
-        manager.delegate(reading)
+        manager.handle(reading)
 
 def start_client():
     client = mqtt.Client()
