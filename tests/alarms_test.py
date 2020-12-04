@@ -1,7 +1,7 @@
 import unittest
 from datetime import datetime
 from home_monitor.models import Reading
-from home_monitor.alarms import AlarmState, NormalState
+from home_monitor.alarms import AlarmState, NormalState, TriggeredState
 
 
 class StateTest(unittest.TestCase):
@@ -18,7 +18,7 @@ class StateTest(unittest.TestCase):
         self.assertEqual(type(state), NormalState)
         reading = Reading('outdoor', -10, 50, datetime.now())
         state = state.on_event(reading)
-        self.assertEqual(type(state), AlarmState)
+        self.assertEqual(type(state), TriggeredState)
 
     def test_on_event_change_to_normal(self):
         state = AlarmState()
