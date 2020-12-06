@@ -1,5 +1,6 @@
 import unittest
 from datetime import datetime
+from pytils import config
 from home_monitor.handlers import AlarmHandler
 from home_monitor.models import Reading, Sensor
 
@@ -7,8 +8,9 @@ from home_monitor.models import Reading, Sensor
 class AlarmHandlerTest(unittest.TestCase):
         
     def setUp(self):
-        webhook = 'https://hooks.slack.com/services/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'
-        self.alarmHandler = AlarmHandler(None, webhook)
+        cfg = config.init('home_monitor/app-test.yaml')
+        self.alarmHandler = AlarmHandler(next_command=None, 
+            slack_webhook_url=cfg.slack_webhook_url)
 
     def test_process_first_normal_sensor(self):
         reading = Reading('outdoor', 10, 20, datetime.now())
@@ -22,6 +24,7 @@ class AlarmHandlerTest(unittest.TestCase):
         sensor.reading = Reading('outdoor', -10, 20, datetime.now())
         self.alarmHandler.process(sensor)
         # What to assert?
+
 
 if __name__ == '__main__':
     unittest.main()
