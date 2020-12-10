@@ -9,12 +9,9 @@ Please find instructions on how to [set up a MQTT broker](https://randomnerdtuto
 View all messages sent to the MQTT Broker (locally on the same machine):
 
 ```
-$ mosquitto_sub -t /#
-```
-or
-```
 $ mosquitto_sub -v -t 'sensors'
 ```
+<!-- or $ mosquitto_sub -t /#-->
 
 ## Installation
 
