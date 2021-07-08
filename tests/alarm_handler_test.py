@@ -6,17 +6,18 @@ from home_monitor.models import Reading, Sensor
 
 
 class AlarmHandlerTest(unittest.TestCase):
-        
+
     def setUp(self):
         cfg = config.init('home_monitor/app-test.yaml')
-        self.alarmHandler = AlarmHandler(next_command=None, 
-            slack_webhook_url=cfg.slack_webhook_url)
+        slack_url = cfg.slack_webhook_url
+        self.alarmHandler = AlarmHandler(next_command=None,
+                                         slack_webhook_url=slack_url)
 
     def test_process_first_normal_sensor(self):
         reading = Reading('outdoor', 10, 20, datetime.now())
         sensor = Sensor.create(reading)
         self.alarmHandler.process(sensor)
-        
+
     def test_process_several_normal_sensors(self):
         reading = Reading('outdoor', 10, 20, datetime.now())
         sensor = Sensor.create(reading)

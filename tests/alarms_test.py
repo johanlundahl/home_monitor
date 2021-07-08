@@ -26,14 +26,14 @@ class StateTest(unittest.TestCase):
         reading = Reading('outdoor', 5, 50, datetime.now())
         state = state.on_event(reading)
         self.assertEqual(type(state), NormalState)
-        
+
     def test_on_event_unchanged_alarm_state(self):
         state = AlarmState()
         self.assertEqual(type(state), AlarmState)
         reading = Reading('outdoor', -5, 50, datetime.now())
         state = state.on_event(reading)
         self.assertEqual(type(state), AlarmState)
-        
+
 
 if __name__ == '__main__':
     unittest.main()

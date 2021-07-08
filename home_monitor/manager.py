@@ -1,10 +1,9 @@
-from datetime import datetime
-from home_monitor.handlers import PersistHandler, AlarmHandler 
+from home_monitor.handlers import PersistHandler, AlarmHandler
 from home_monitor.models import Sensor
 
 
 class SensorManager:
-    
+
     def __init__(self, sensor_url, slack_url):
         self.save_sensor_url = sensor_url
         self.slack_webhook_url = slack_url
@@ -27,4 +26,3 @@ class SensorManager:
 
     def delegate(self, sensor):
         self.first_command.handle(sensor)
-   

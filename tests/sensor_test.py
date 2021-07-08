@@ -22,14 +22,14 @@ class SensorTest(unittest.TestCase):
         self.assertTrue(isinstance(sensor.alarm_state, NormalState))
         sensor.reading = Reading('outdoor', -2, 55, datetime.now())
         self.assertTrue(isinstance(sensor.alarm_state, TriggeredState))
-    
+
     def test_update_triggered_to_normal_state(self):
         reading = Reading('outdoor', -1, 57, datetime.now())
         sensor = Sensor.create(reading)
         self.assertTrue(isinstance(sensor.alarm_state, TriggeredState))
         sensor.reading = Reading('outdoor', 2, 55, datetime.now())
         self.assertTrue(isinstance(sensor.alarm_state, NormalState))
-        
+
     def test_update_triggered_to_alarm_state(self):
         reading = Reading('outdoor', -1, 57, datetime.now())
         sensor = Sensor.create(reading)

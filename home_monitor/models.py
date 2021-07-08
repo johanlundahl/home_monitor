@@ -31,7 +31,7 @@ class Sensor:
     @property
     def reading(self):
         return self._reading
-    
+
     @reading.setter
     def reading(self, reading):
         self._last_updated = datetime.now()
@@ -49,7 +49,8 @@ class Sensor:
         return str(self)
 
     def __str__(self):
-        return 'Sensor ({} {} {})'.format(self.reading.name, self.last_updated, self.alarm_state)
+        return (f'Sensor ({self.reading.name}, '
+                f'{self.last_updated}, {self.alarm_state})')
 
 
 class Reading:
@@ -63,11 +64,11 @@ class Reading:
     @property
     def name(self):
         return self._name
-    
+
     @property
     def temperature(self):
         return self._temperature
-    
+
     @property
     def humidity(self):
         return self._humidity
@@ -75,7 +76,7 @@ class Reading:
     @property
     def timestamp(self):
         return self._timestamp.strftime('%Y-%m-%d %H:%M:%S')
-    
+
     def to_json(self):
         return json.dumps(self, cls=SensorEncoder)
 
@@ -87,30 +88,31 @@ class Reading:
         return str(self)
 
     def __str__(self):
-        return 'Reading({}, {}, {})'.format(self._name, self._temperature, self._humidity)
+        return f'Reading({self._name}, {self._temperature}, {self._humidity})'
 
 
 class SensorEncoder(json.JSONEncoder):
-    
+
     def default(self, obj):
         if isinstance(obj, Sensor):
-            return {'name': obj.reading.name, 
-                'last_updated': obj.last_updated, 
-                'alarm_state': obj.alarm_state
-                }
+            return {'name': obj.reading.name,
+                    'last_updated': obj.last_updated,
+                    'alarm_state': obj.alarm_state
+                    }
         if isinstance(obj, Reading):
-            return {'name': obj.name, 
-                'temperature': obj.temperature, 
-                'humidity': obj.humidity, 
-                'timestamp': obj.timestamp
-                }
+            return {'name': obj.name,
+                    'temperature': obj.temperature,
+                    'humidity': obj.humidity,
+                    'timestamp': obj.timestamp
+                    }
         else:
             return super().default(obj)
 
 
 class SensorDecoder():
-    
+
     @classmethod
     def decode(cls, dct):
         if 'temperature' in dct and 'humidity' in dct:
-            return Reading(dct['name'], dct['temperature'], dct['humidity'], datetime.now())
+            return Reading(dct['name'], dct['temperature'],
+                           dct['humidity'], datetime.now())

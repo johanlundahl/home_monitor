@@ -3,8 +3,9 @@ from datetime import datetime
 from home_monitor.manager import SensorManager
 from home_monitor.models import Reading
 
+
 class ManagerTest(unittest.TestCase):
-        
+
     def setUp(self):
         self.manager = SensorManager('', '')
 
@@ -29,8 +30,7 @@ class ManagerTest(unittest.TestCase):
         self.manager.update_sensor(room2)
         self.assertTrue('Room 1' in self.manager._sensors)
         self.assertTrue('Room 2' in self.manager._sensors)
-            
+
 
 if __name__ == '__main__':
     unittest.main()
-
