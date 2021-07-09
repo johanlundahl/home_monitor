@@ -44,7 +44,7 @@ slack_webhook_url: = ""
 
 ...
 
-save_sensor_url: "http://localhost:5000/api/sensors"
+save_sensor_url: "http://localhost:5000/api/v2/sensors"
 
 ```
 
