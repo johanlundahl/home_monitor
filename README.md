@@ -1,3 +1,6 @@
+[![lint](https://github.com/johanlundahl/home_monitor/actions/workflows/lint.yml/badge.svg)](https://github.com/johanlundahl/home_monitor/actions/workflows/lint.yml)
+[![test](https://github.com/johanlundahl/home_monitor/actions/workflows/test.yml/badge.svg)](https://github.com/johanlundahl/home_monitor/actions/workflows/test.yml)
+
 # Home Monitor
 This project receives sensor values from a MQTT server, checks their values against pre-defined validation rules and sends them to [Home Store](http://github.com/johanlundahl/home_store) for storage.
 
