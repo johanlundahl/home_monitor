@@ -21,8 +21,7 @@ run:
 	python3 -m home_monitor.app
 
 test:
-	#python3 -m pytest tests/*_test.py
-	coverage run -m pytest tests/*_test.py
+	coverage run --source=. -m pytest tests/*_test.py 
 
 cov:
 	coverage report
