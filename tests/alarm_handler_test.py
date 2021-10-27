@@ -22,7 +22,6 @@ class AlarmHandlerTest(unittest.TestCase):
     @patch('home_monitor.handlers.slack.post')
     def test_process_several_normal_sensors(self, mock):
         mock.return_value = 200, ''
-
         reading = Reading('outdoor', 10, 20, datetime.now())
         sensor = Sensor.create(reading)
         self.alarmHandler.process(sensor)
