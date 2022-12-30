@@ -4,3 +4,4 @@ home_monitor/config.py
 .DS_Store
 .coverage
 htmlcov/*
+.coveralls.yml

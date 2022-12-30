@@ -22,10 +22,9 @@ run:
 
 test:
 	coverage run --source=. -m pytest tests/*_test.py 
-
-cov:
 	coverage report
-	coverage html	
+	coverage html
+	coveralls
 
 update: 
 	git pull
