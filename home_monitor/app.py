@@ -1,18 +1,18 @@
 import logging
 import time
 import paho.mqtt.client as mqtt
-from pytils import config
+from home_monitor.config import Config
 from home_monitor.manager import SensorManager
 from home_monitor.models import Reading
 
 
-cfg = config.init()
-manager = SensorManager(cfg.save_sensor_url, cfg.slack_webhook_url)
+cfg = Config.init()
+manager = SensorManager(cfg.home_store.url, cfg.slack.url)
 
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
-    logging.info(f'Connected to MQTT {cfg.mqtt.server} with result {str(rc)}')
+    logging.info(f'Connected to MQTT {cfg.mqtt.url} with result {str(rc)}')
     client.subscribe(cfg.mqtt.topic)
     logging.info('Subscribing to topic {}'.format(cfg.mqtt.topic))
 
@@ -31,7 +31,7 @@ def start_client():
     client = mqtt.Client()
     client.on_connect = on_connect
     client.on_message = on_message
-    client.connect(cfg.mqtt.server, 1883, 60)
+    client.connect(cfg.mqtt.url, 1883, 60)
     client.loop_start()
     return client
 

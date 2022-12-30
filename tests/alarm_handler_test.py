@@ -9,8 +9,9 @@ from home_monitor.models import Reading, Sensor
 class AlarmHandlerTest(unittest.TestCase):
 
     def setUp(self):
-        cfg = config.init('tests/app-test.yaml')
-        slack_url = cfg.slack_webhook_url
+        # cfg = config.init('tests/app-test.yaml')
+        # slack_url = cfg.slack_webhook_url
+        slack_url = ''
         self.alarmHandler = AlarmHandler(next_command=None,
                                          slack_webhook_url=slack_url)
 

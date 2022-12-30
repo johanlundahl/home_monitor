@@ -5,3 +5,4 @@ home_monitor/config.py
 .coverage
 htmlcov/*
 .coveralls.yml
+*.yaml
