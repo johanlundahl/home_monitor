@@ -9,6 +9,9 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
 jobs:
   build:
 
@@ -31,5 +34,6 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: |
-        coverage run -m pytest tests/*_test.py
+        coverage run --source=. -m pytest tests/*_test.py
         coverage report
+        coveralls --service=github
