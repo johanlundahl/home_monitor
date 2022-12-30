@@ -1,7 +1,6 @@
 import unittest
 from unittest.mock import patch
 from datetime import datetime
-from pytils import config
 from home_monitor.handlers import AlarmHandler
 from home_monitor.models import Reading, Sensor
 
